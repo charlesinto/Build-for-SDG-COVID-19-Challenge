@@ -92,7 +92,7 @@ const calculateImpact = (req, res) => {
 const getLogs = async (req, res) => {
   logs.push({ method: req.method, url: req.baseUrl, status: 200 });
   const file = await writeToFile(logs);
-  return res.set('Content-Type', 'text').status(200).sendFile(path.join(__dirname, `../log/${file}`));
+  return res.set('Content-Type', 'text').status(200).sendFile(path.join(__dirname, `../${file}`));
 };
 
 

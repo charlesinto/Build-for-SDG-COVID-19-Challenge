@@ -71,7 +71,7 @@ const writeToFile = (data) => {
     // fs.unlinkSync(path.join(__dirname, '../log/logs.txt'));
     try {
       data.forEach((entry) => {
-        fs.appendFileSync(path.join(__dirname, '../log/logs.txt'), `${entry.method} ${entry.url} ${entry.status} \n`);
+        fs.appendFileSync(path.join(__dirname, '../logs.txt'), `${entry.method} ${entry.url} ${entry.status} \n`);
       });
       resolve('logs.txt');
     } catch (error) {
