@@ -67,9 +67,11 @@ const covid19ImpactEstimator = (input) => {
 
   const availableBedSpaces = Math.floor(0.35 * totalHospitalBeds);
   output.impact.hospitalBedsByRequestedTime = calculateHospitalRequestByTime(
-    availableBedSpaces, output.impact.severeCasesByRequestedTime);
+    availableBedSpaces, output.impact.severeCasesByRequestedTime
+  );
   output.severeImpact.hospitalBedsByRequestedTime = calculateHospitalRequestByTime(
-    availableBedSpaces, output.severeImpact.severeCasesByRequestedTime);
+    availableBedSpaces, output.severeImpact.severeCasesByRequestedTime
+  );
 
   output.severeImpact.casesForVentilatorsByRequestedTime = Math.floor(0.02
         * output.severeImpact.infectionsByRequestedTime);
@@ -85,10 +87,8 @@ const covid19ImpactEstimator = (input) => {
   return {
     data,
     impact: output.impact,
-    severeImpact: output.severeImpact,
+    severeImpact: output.severeImpact
   };
 };
-
 // console.log(covid19ImpactEstimator(data));
-
 export default covid19ImpactEstimator;
