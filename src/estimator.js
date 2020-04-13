@@ -14,7 +14,7 @@ const data = {
 
 const output = {
   data: {},
-  impact: {}, // your best case estimation
+  impact: {},
   severeImpact: {}
 };
 
