@@ -15,7 +15,7 @@ const data = {
 const output = {
   data: {},
   impact: {}, // your best case estimation
-  severeImpact: {} // your severe case estimation
+  severeImpact: {}
 };
 
 const getTheNumberFactorSets = (periodType, timeToElapse) => {
