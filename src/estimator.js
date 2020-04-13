@@ -46,6 +46,7 @@ const covid19ImpactEstimator = (input) => {
   output.impact.currentlyInfected = currentlyInfected;
   output.severeImpact.currentlyInfected = reportedCases * 50;
   const factor = getTheNumberFactorSets(periodType, timeToElapse);
+  console.log('print', factor);
   const infectionsByRequestedTimeImpact = output.impact.currentlyInfected
       * 2 ** factor;
   const infectionsByRequestedTimeSevere = output.severeImpact.currentlyInfected
