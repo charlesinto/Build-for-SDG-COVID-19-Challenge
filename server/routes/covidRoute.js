@@ -5,7 +5,6 @@ const router = express.Router();
 
 router.post('/', calculateImpact);
 router.post('/:format', calculateImpact);
-router.get('/', getLogs);
-router.get('/:format', getLogs);
+router.get('/logs', getLogs);
 
 export default router;
