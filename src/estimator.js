@@ -19,7 +19,7 @@ const output = {
 };
 
 const getTheNumberFactorSets = (periodType, timeToElapse) => {
-  switch (periodType) {
+  switch (periodType.trim().toLowerCase()) {
     case 'days':
       return Math.floor(timeToElapse / 3);
     case 'weeks':

@@ -91,5 +91,6 @@ const covid19ImpactEstimator = (input) => {
   };
 };
 // console.log(covid19ImpactEstimator(data));
+// ''.toLowerCase
 
 export default covid19ImpactEstimator;
