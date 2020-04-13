@@ -1,22 +1,5 @@
-const data = {
-  region: {
-    name: 'Africa',
-    avgAge: 19.7,
-    avgDailyIncomeInUSD: 5,
-    avgDailyIncomePopulation: 0.71
-  },
-  periodType: 'days',
-  timeToElapse: 58,
-  reportedCases: 674,
-  population: 66622705,
-  totalHospitalBeds: 1380614
-};
-
-const output = {
-  data: {}, // the input data you got
-  impact: {}, // your best case estimation
-  severeImpact: {} // your severe case estimation
-};
+import fs from 'fs';
+import path from 'path';
 
 const getTheNumberFactorSets = (periodType, timeToElapse) => {
   switch (periodType) {
@@ -32,6 +15,7 @@ const getTheNumberFactorSets = (periodType, timeToElapse) => {
 };
 
 const covid19ImpactEstimator = (input) => {
+  const output = {impact: {},severeImpact: {} };
   const {
     reportedCases, periodType, timeToElapse, totalHospitalBeds,
     region: { avgDailyIncomeInUSD }
@@ -42,46 +26,61 @@ const covid19ImpactEstimator = (input) => {
   const factor = getTheNumberFactorSets(periodType, timeToElapse);
 
   const infectionsByRequestedTimeImpact = output.impact.currentlyInfected
-    * 2 ** factor;
+      * 2 ** factor;
   const infectionsByRequestedTimeSevere = output.severeImpact.currentlyInfected
-  * 2 ** factor;
+    * 2 ** factor;
   output.impact.infectionsByRequestedTime = infectionsByRequestedTimeImpact;
 
   output.severeImpact.infectionsByRequestedTime = infectionsByRequestedTimeSevere;
 
   output.impact.severeCasesByRequestedTime = Math.floor(0.15
-        * output.impact.infectionsByRequestedTime);
+          * output.impact.infectionsByRequestedTime);
   output.severeImpact.severeCasesByRequestedTime = Math.floor(0.15
-        * output.severeImpact.infectionsByRequestedTime);
+          * output.severeImpact.infectionsByRequestedTime);
 
   output.impact.casesForICUByRequestedTime = Math.floor(0.05
-        * output.impact.infectionsByRequestedTime);
+          * output.impact.infectionsByRequestedTime);
   output.severeImpact.casesForICUByRequestedTime = Math.floor(0.05
-        * output.severeImpact.infectionsByRequestedTime);
+          * output.severeImpact.infectionsByRequestedTime);
 
   const availableBedSpaces = Math.floor(0.35 * totalHospitalBeds);
   output.impact.hospitalBedsByRequestedTime = availableBedSpaces;
   output.severeImpact.hospitalBedsByRequestedTime = availableBedSpaces;
 
   output.severeImpact.casesForVentilatorsByRequestedTime = Math.floor(0.02
-        * output.severeImpact.infectionsByRequestedTime);
+          * output.severeImpact.infectionsByRequestedTime);
   output.impact.casesForVentilatorsByRequestedTime = Math.floor(0.02
-        * output.impact.infectionsByRequestedTime);
+          * output.impact.infectionsByRequestedTime);
 
   output.impact.dollarsInFlight = Math.floor((output.impact.infectionsByRequestedTime
-        * 0.65 * avgDailyIncomeInUSD) / 30);
+          * 0.65 * avgDailyIncomeInUSD) / 30);
 
   output.severeImpact.dollarsInFlight = Math.floor((output.severeImpact.infectionsByRequestedTime
-        * 0.65 * avgDailyIncomeInUSD) / 30);
+          * 0.65 * avgDailyIncomeInUSD) / 30);
 
   return {
-    data,
+    input,
     impact: output.impact,
     severeImpact: output.severeImpact,
     hospitalBedsByRequestedTime: availableBedSpaces
   };
 };
 
-// console.log(covid19ImpactEstimator(data));
+const writeToFile = (data) => {
+  return new Promise((resolve, reject) => {
+    // fs.unlinkSync(path.join(__dirname, '../log/logs.txt'));
+    try {
+      data.forEach((entry) => {
+        fs.appendFileSync(path.join(__dirname, '../log/logs.txt'), `${entry.method} ${entry.url} ${entry.status} \n`);
+      });
+      resolve('logs.txt');
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
 
-export default covid19ImpactEstimator;
+module.exports = {
+  covid19ImpactEstimator,
+  writeToFile
+};
