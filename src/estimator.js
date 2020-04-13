@@ -13,7 +13,7 @@ const data = {
 };
 
 const output = {
-  data: {}, // the input data you got
+  data: {},
   impact: {}, // your best case estimation
   severeImpact: {} // your severe case estimation
 };
