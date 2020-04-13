@@ -46,7 +46,7 @@ const covid19ImpactEstimator = (input) => {
   output.impact.currentlyInfected = currentlyInfected;
   output.severeImpact.currentlyInfected = reportedCases * 50;
   const factor = getTheNumberFactorSets(periodType, timeToElapse);
-  console.log('print', factor);
+
   const infectionsByRequestedTimeImpact = output.impact.currentlyInfected
       * 2 ** factor;
   const infectionsByRequestedTimeSevere = output.severeImpact.currentlyInfected
@@ -61,7 +61,7 @@ const covid19ImpactEstimator = (input) => {
           * output.impact.infectionsByRequestedTime);
   output.severeImpact.casesForICUByRequestedTime = Math.floor(0.05
           * output.severeImpact.infectionsByRequestedTime);
-  const availableBedSpaces = Math.floor(0.35 * totalHospitalBeds);
+  const availableBedSpaces = Math.trunc(0.35 * totalHospitalBeds);
   output.impact.hospitalBedsByRequestedTime = calculateHospitalRequestByTime(
     availableBedSpaces, output.impact.severeCasesByRequestedTime
   );
