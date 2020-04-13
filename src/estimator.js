@@ -32,7 +32,7 @@ const getTheNumberFactorSets = (periodType, timeToElapse) => {
 };
 
 const calculateHospitalRequestByTime = (availableBedSpaces, severeInfection) => {
-  const shortage = availableBedSpaces - severeInfection;
+  const shortage = Math.floor(availableBedSpaces) - Math.floor(severeInfection);
   const result = shortage < 0 ? shortage : availableBedSpaces;
   return Math.floor(result);
 };
