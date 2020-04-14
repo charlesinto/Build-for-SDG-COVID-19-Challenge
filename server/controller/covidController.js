@@ -54,6 +54,7 @@ const convertToXml = (output) => {
 };
 
 const calculateImpact = (req, res) => {
+  const start = process.hrtime();
   const {
     region: {
       name, avgAge, avgDailyIncomeInUSD, avgDailyIncomePopulation
@@ -67,23 +68,41 @@ const calculateImpact = (req, res) => {
       || !(reportedCases)
       || !(population)
       || !(totalHospitalBeds)) {
-      logs.push({ method: req.method, url: req.baseUrl, status: 400 });
+      const end = process.hrtime(start);
+      const timeInMs = (end[0] * 1000000000 + end[1]) / 1000000;
+      logs.push({
+        method: req.method, url: req.baseUrl, status: 400, time: timeInMs
+      });
       writeToFile(logs);
       return res.status(400).send({ message: 'Bad or incomplete request' });
     }
     if (!req.body) {
-      logs.push({ method: req.method, url: req.baseUrl, status: 400 });
+      const end = process.hrtime(start);
+      const timeInMs = (end[0] * 1000000000 + end[1]) / 1000000;
+      logs.push({
+        method: req.method, url: req.baseUrl, status: 400, time: timeInMs
+      });
       writeToFile(logs);
       return res.status(400).send({ message: 'Bad Request' });
     }
     const output = covid19ImpactEstimator(req.body);
-    logs.push({ method: req.method, url: req.baseUrl, status: 200 });
+    // logs.push({ method: req.method, url: req.baseUrl, status: 200 });
     if (req.params.format === 'xml') {
       const fromJsToXml = js2xmlparser.parse('output', convertToXml(output));
+      const end = process.hrtime(start);
+      const timeInMs = (end[0] * 1000000000 + end[1]) / 1000000;
+      logs.push({
+        method: req.method, url: req.baseUrl, status: 200, time: timeInMs
+      });
       writeToFile(logs);
       return res.set('Content-Type', 'application/xml').status(200)
         .send(fromJsToXml);
     }
+    const end = process.hrtime(start);
+    const timeInMs = (end[0] * 1000000000 + end[1]) / 1000000;
+    logs.push({
+      method: req.method, url: req.baseUrl, status: 200, time: timeInMs
+    });
     writeToFile(logs);
     return res.status(200).send({ ...output });
   } catch (error) {
@@ -94,7 +113,12 @@ const calculateImpact = (req, res) => {
 };
 
 const getLogs = async (req, res) => {
-  logs.push({ method: req.method, url: req.baseUrl, status: 200 });
+  const start = process.hrtime();
+  const end = process.hrtime(start);
+  const timeInMs = (end[0] * 1000000000 + end[1]) / 1000000;
+  logs.push({
+    method: req.method, url: req.baseUrl, status: 200, time: timeInMs
+  });
   const file = await writeToFile(logs);
   return res.set('Content-Type', 'text').status(200).sendFile(path.join(__dirname, `../${file}`));
 };
