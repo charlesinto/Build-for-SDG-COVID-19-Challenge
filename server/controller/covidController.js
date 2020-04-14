@@ -111,7 +111,7 @@ const getLogs = async (req, res) => {
     method: req.method, url: `${req.baseUrl}/logs`, status: 200, time: timeInMs
   });
   const file = await writeToFile(logs);
-  return res.set('Content-Type', 'text').status(200).sendFile(path.join(__dirname, `../${file}`));
+  return res.set('Content-Type', 'text/plain').status(200).sendFile(path.join(__dirname, `../${file}`));
 };
 
 
