@@ -65,9 +65,11 @@ const covid19ImpactEstimator = (input) => {
   output.impact.hospitalBedsByRequestedTime = calculateHospitalRequestByTime(
     availableBedSpaces, output.impact.severeCasesByRequestedTime
   );
+  console.log('Impact: ', output.impact.hospitalBedsByRequestedTime);
   output.severeImpact.hospitalBedsByRequestedTime = calculateHospitalRequestByTime(
     availableBedSpaces, output.severeImpact.severeCasesByRequestedTime
   );
+  console.log('Severe: ', output.severeImpact.hospitalBedsByRequestedTime);
   output.severeImpact.casesForVentilatorsByRequestedTime = Math.trunc(0.02
           * output.severeImpact.infectionsByRequestedTime);
   output.impact.casesForVentilatorsByRequestedTime = Math.trunc(0.02
