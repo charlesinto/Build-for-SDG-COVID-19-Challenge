@@ -34,7 +34,7 @@ const getTheNumberFactorSets = (periodType, timeToElapse) => {
 const calculateHospitalRequestByTime = (availableBedSpaces, severeInfection) => {
   const shortage = availableBedSpaces - severeInfection;
   const result = shortage < 0 ? shortage : availableBedSpaces;
-  return Math.trunc(result);
+  return result;
 };
 
 const covid19ImpactEstimator = (input) => {
