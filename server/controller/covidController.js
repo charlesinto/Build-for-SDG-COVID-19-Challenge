@@ -67,19 +67,24 @@ const calculateImpact = (req, res) => {
       || !(reportedCases)
       || !(population)
       || !(totalHospitalBeds)) {
+      logs.push({ method: req.method, url: req.baseUrl, status: 400 });
+      writeToFile(logs);
       return res.status(400).send({ message: 'Bad or incomplete request' });
     }
     if (!req.body) {
       logs.push({ method: req.method, url: req.baseUrl, status: 400 });
+      writeToFile(logs);
       return res.status(400).send({ message: 'Bad Request' });
     }
     const output = covid19ImpactEstimator(req.body);
     logs.push({ method: req.method, url: req.baseUrl, status: 200 });
     if (req.params.format === 'xml') {
       const fromJsToXml = js2xmlparser.parse('output', convertToXml(output));
+      writeToFile(logs);
       return res.set('Content-Type', 'application/xml').status(200)
         .send(fromJsToXml);
     }
+    writeToFile(logs);
     return res.status(200).send({ ...output });
   } catch (error) {
     logs.push({ method: req.method, url: req.baseUrl, status: 500 });
