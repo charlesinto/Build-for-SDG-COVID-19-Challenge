@@ -34,7 +34,7 @@ const getTheNumberFactorSets = (periodType, timeToElapse) => {
 const calculateHospitalRequestByTime = (availableBedSpaces, severeInfection) => {
   const shortage = availableBedSpaces - severeInfection;
   const result = shortage < 0 ? shortage : availableBedSpaces;
-  return result;
+  return Math.trunc(result);
 };
 
 const covid19ImpactEstimator = (input) => {
@@ -53,10 +53,10 @@ const covid19ImpactEstimator = (input) => {
       * 2 ** factor;
   output.impact.infectionsByRequestedTime = infectionsByRequestedTimeImpact;
   output.severeImpact.infectionsByRequestedTime = infectionsByRequestedTimeSevere;
-  output.impact.severeCasesByRequestedTime = Math.floor(0.15
-          * output.impact.infectionsByRequestedTime);
-  output.severeImpact.severeCasesByRequestedTime = Math.floor(0.15
-          * output.severeImpact.infectionsByRequestedTime);
+  output.impact.severeCasesByRequestedTime = 0.15
+          * output.impact.infectionsByRequestedTime;
+  output.severeImpact.severeCasesByRequestedTime = 0.15
+          * output.severeImpact.infectionsByRequestedTime;
   output.impact.casesForICUByRequestedTime = Math.trunc(0.05
           * output.impact.infectionsByRequestedTime);
   output.severeImpact.casesForICUByRequestedTime = Math.trunc(0.05
