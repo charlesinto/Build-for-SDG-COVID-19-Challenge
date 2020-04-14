@@ -21,11 +21,11 @@ const output = {
 const getTheNumberFactorSets = (periodType, timeToElapse) => {
   switch (periodType.trim().toLowerCase()) {
     case 'days':
-      return Math.trunc(timeToElapse / 3);
+      return Math.floor(timeToElapse / 3);
     case 'weeks':
-      return Math.trunc((timeToElapse * 7) / 3);
+      return Math.floor((timeToElapse * 7) / 3);
     case 'months':
-      return Math.trunc((timeToElapse * 30) / 3);
+      return Math.floor((timeToElapse * 30) / 3);
     default:
       return -1;
   }
@@ -53,9 +53,9 @@ const covid19ImpactEstimator = (input) => {
       * 2 ** factor;
   output.impact.infectionsByRequestedTime = infectionsByRequestedTimeImpact;
   output.severeImpact.infectionsByRequestedTime = infectionsByRequestedTimeSevere;
-  output.impact.severeCasesByRequestedTime = Math.trunc(0.15
+  output.impact.severeCasesByRequestedTime = Math.floor(0.15
           * output.impact.infectionsByRequestedTime);
-  output.severeImpact.severeCasesByRequestedTime = Math.trunc(0.15
+  output.severeImpact.severeCasesByRequestedTime = Math.floor(0.15
           * output.severeImpact.infectionsByRequestedTime);
   output.impact.casesForICUByRequestedTime = Math.trunc(0.05
           * output.impact.infectionsByRequestedTime);
