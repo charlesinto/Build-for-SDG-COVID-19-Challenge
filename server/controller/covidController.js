@@ -71,19 +71,10 @@ const calculateImpact = (req, res) => {
       const end = process.hrtime(start);
       const timeInMs = (end[0] * 1000000000 + end[1]) / 1000000;
       logs.push({
-        method: req.method, url: req.baseUrl, status: 400, time: timeInMs
+        method: req.method, url: `${req.baseUrl}/${req.params.format}`, status: 400, time: timeInMs
       });
       writeToFile(logs);
       return res.status(400).send({ message: 'Bad or incomplete request' });
-    }
-    if (!req.body) {
-      const end = process.hrtime(start);
-      const timeInMs = (end[0] * 1000000000 + end[1]) / 1000000;
-      logs.push({
-        method: req.method, url: req.baseUrl, status: 400, time: timeInMs
-      });
-      writeToFile(logs);
-      return res.status(400).send({ message: 'Bad Request' });
     }
     const output = covid19ImpactEstimator(req.body);
     // logs.push({ method: req.method, url: req.baseUrl, status: 200 });
@@ -92,7 +83,7 @@ const calculateImpact = (req, res) => {
       const end = process.hrtime(start);
       const timeInMs = (end[0] * 1000000000 + end[1]) / 1000000;
       logs.push({
-        method: req.method, url: req.baseUrl, status: 200, time: timeInMs
+        method: req.method, url: `${req.baseUrl}/xml`, status: 200, time: timeInMs
       });
       writeToFile(logs);
       return res.set('Content-Type', 'application/xml').status(200)
@@ -101,12 +92,12 @@ const calculateImpact = (req, res) => {
     const end = process.hrtime(start);
     const timeInMs = (end[0] * 1000000000 + end[1]) / 1000000;
     logs.push({
-      method: req.method, url: req.baseUrl, status: 200, time: timeInMs
+      method: req.method, url: `${req.baseUrl}/json`, status: 200, time: timeInMs
     });
     writeToFile(logs);
     return res.status(200).send({ ...output });
   } catch (error) {
-    logs.push({ method: req.method, url: req.baseUrl, status: 500 });
+    logs.push({ method: req.method, url: `${req.baseUrl}/json`, status: 500 });
     writeToFile(logs);
     return res.status(500).send({ error });
   }
@@ -117,7 +108,7 @@ const getLogs = async (req, res) => {
   const end = process.hrtime(start);
   const timeInMs = (end[0] * 1000000000 + end[1]) / 1000000;
   logs.push({
-    method: req.method, url: req.baseUrl, status: 200, time: timeInMs
+    method: req.method, url: `${req.baseUrl}/logs`, status: 200, time: timeInMs
   });
   const file = await writeToFile(logs);
   return res.set('Content-Type', 'text').status(200).sendFile(path.join(__dirname, `../${file}`));
