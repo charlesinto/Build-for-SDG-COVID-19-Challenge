@@ -16,6 +16,7 @@ app.use(express.static(path.join(__dirname, '../assets')));
 
 app.use('/api/v1/on-covid-19', covidRoute);
 
+app.post('/', covidRoute);
 app.get('/', (req, res) => {
   return res.sendFile(path.join(__dirname, '../public/index.html'));
 });
