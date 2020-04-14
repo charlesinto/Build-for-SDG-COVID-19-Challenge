@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COVID-19</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="./index.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- <nav>
+        <div class="header-logo">
+            <h4>COVID-19 ESTIMATOR</h4>
+        </div>
+    </nav> -->
+    <section class="landing-page-container" style="position: relative;">
+        <!-- <img src="" alt="charts" class="bg-image"> -->
+        <div class="quote-text">
+            <div class="quote-content">
+                <article>
+                    &quot; Yes, the virus only kills a small percentage of those afflicted. Yes, 
+                    the flu kills 10s of thousands of
+                    people annually. Yes, 80% of people will experience lightweight symptoms with COVID19. 
+                    Yes the
+                    mortality rate of COVID19 is relatively low (1–2%). All of this true, but is immaterial. They are the
+                    wrong numbers to focus on &quot;
+                </article>
+                
+                <p class="author">
+                    -- Jason S Warner
+                </p>
+            </div>
+            
+        </div>
+        <div class="action-btn-wrapper">
+            <a href="#form-container" class="action-btn">Find Out Impacts</a>
+        </div>
+    </section>
+    <section id="form-container">
+        <div >
+            <form class="form-style-3" >
+            <fieldset><legend>Calculate COVID-19 IMPACT</legend>
+            <label for="field1"><span>Population <span class="required">*</span></span><input data-population type="number" class="input-field" name="field1" value="" /></label>
+            <label for="field2"><span>Time to Elapse <span class="required">*</span></span><input data-time-to-elapse type="number" class="input-field" name="field2" value="" /></label>
+            <label for="field3"><span>Reported Cases <span class="required">*</span></span><input data-reported-cases type="number" class="input-field" name="field3" value="" /></label>
+            <label for="field3"><span>Total Hospital Beds<span class="required">*</span></span><input data-total-hospital-beds type="number" class="input-field" name="field3" value="" /></label>
+            <label for="field4"><span>Period Type <span class="required">*</span></span><select data-period-type name="field4" class="select-field">
+            <option value="days">Days</option>
+            <option value="weeks">Weeks</option>
+            <option value="months">Months</option>
+            </select></label>
+            <div class="btn-wrapper">
+                <button data-go-estimate >Calculate Impact</button>
+            </div>
+            </fieldset>
+            </form>
+        </div>
+    </section>
+    <section class="analysis-result-wrapper">
+        <h4>Impact</h4>
+        <hr>
+        <div class="row">
+            <div class="card col">
+                <div>
+                    <div class="analysis-title">Currently Infected</div>
+                    <div class="results">
+                        <span id="impact-currentlyInfected">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card col">
+                <div>
+                    <div class="analysis-title">Infections By Requested Time</div>
+                    <div class="results">
+                        <span id="impact-infectionsByRequestTine">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card col">
+                <div>
+                    <div class="analysis-title">Severe Cases By Requested Time</div>
+                    <div class="results">
+                        <span id="impact-seveCasesByRequestTime">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="card col">
+                <div>
+                    <div class="analysis-title">ICU Cases By Requested Time</div>
+                    <div class="results">
+                        <span id="impact-icuCasesByRequestTime">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card col">
+                <div>
+                    <div class="analysis-title">Available Hospital Bed</div>
+                    <div class="results">
+                        <span id="impact-availableHospitals">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card col">
+                <div>
+                    <div class="analysis-title">Ventilator By Requested Time</div>
+                    <div class="results">
+                        <span id="impact-ventilatorsByRequestTime">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="card col">
+                <div>
+                    <div class="analysis-title">Dollars In Flight</div>
+                    <div class="results">
+                        <span id="impact-dollarsInFlight">0</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <section class="analysis-result-wrapper">
+        <h4>Severe Impact</h4>
+        <hr>
+        <div class="row">
+            <div class="card col">
+                <div>
+                    <div class="analysis-title">Currently Infected</div>
+                    <div class="results">
+                        <span id="severe-currentlyInfected">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card col">
+                <div>
+                    <div class="analysis-title">Infections By Requested Time</div>
+                    <div class="results">
+                        <span id="severe-infectionsByRequestTine">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card col">
+                <div>
+                    <div class="analysis-title">Severe Cases By Requested Time</div>
+                    <div class="results">
+                        <span id="severe-seveCasesByRequestTime">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="card col">
+                <div>
+                    <div class="analysis-title">ICU Cases By Requested Time</div>
+                    <div class="results">
+                        <span id="severe-icuCasesByRequestTime">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card col">
+                <div>
+                    <div class="analysis-title">Available Hospital Bed</div>
+                    <div class="results">
+                        <span id="severe-availableHospitals">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card col">
+                <div>
+                    <div class="analysis-title">Ventilator By Requested Time</div>
+                    <div class="results">
+                        <span id="severe-ventilatorsByRequestTime">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="card col">
+                <div>
+                    <div class="analysis-title">Dollars In Flight</div>
+                    <div class="results">
+                        <span id="severe-dollarsInFlight">0</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</body>
+</html>

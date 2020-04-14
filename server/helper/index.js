@@ -1,22 +1,5 @@
-const data = {
-  region: {
-    name: 'Africa',
-    avgAge: 19.7,
-    avgDailyIncomeInUSD: 5,
-    avgDailyIncomePopulation: 0.71
-  },
-  periodType: 'days',
-  timeToElapse: 58,
-  reportedCases: 674,
-  population: 66622705,
-  totalHospitalBeds: 1380614
-};
-
-const output = {
-  data: {},
-  impact: {},
-  severeImpact: {}
-};
+import fs from 'fs';
+import path from 'path';
 
 const getTheNumberFactorSets = (periodType, timeToElapse) => {
   switch (periodType.trim().toLowerCase()) {
@@ -62,6 +45,7 @@ const covid19ImpactEstimator = (input) => {
     reportedCases, periodType, timeToElapse, totalHospitalBeds,
     region: { avgDailyIncomeInUSD, avgDailyIncomePopulation }
   } = input;
+  const output = { impact: {}, severeImpact: {} };
   const currentlyInfected = reportedCases * 10;
   output.impact.currentlyInfected = currentlyInfected;
   output.severeImpact.currentlyInfected = reportedCases * 50;
@@ -100,11 +84,28 @@ const covid19ImpactEstimator = (input) => {
     avgDailyIncomeInUSD, avgDailyIncomePopulation, periodType
   );
   return {
-    data,
+    data: input,
     impact: output.impact,
     severeImpact: output.severeImpact
   };
 };
-//   console.log(covid19ImpactEstimator(data));
 
-export default covid19ImpactEstimator;
+const writeToFile = (data) => (
+  new Promise((resolve, reject) => {
+    // fs.unlinkSync(path.join(__dirname, '../log/logs.txt'));
+    try {
+      data.forEach((entry) => {
+        fs.appendFileSync(path.join(__dirname, '../logs.txt'), `${entry.method} \t ${entry.url} \t ${entry.status} \t ${Math.floor(entry.time * 100)}ms \n`);
+      });
+      resolve('logs.txt');
+    } catch (error) {
+      reject(error);
+    }
+  })
+);
+
+
+module.exports = {
+  covid19ImpactEstimator,
+  writeToFile
+};
