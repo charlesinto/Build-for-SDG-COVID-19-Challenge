@@ -5,50 +5,50 @@ import { logs } from '../constants';
 
 const convertToXml = (output) => {
   const obj = {
-    input: {
+    'data': {
       '@': {
-        type: 'input'
+        'type': 'data'
       },
-      region: {
+      'region': {
         '@': {
-          type: 'region'
+          'type': 'region'
         },
-        name: output.input.region.name,
-        avgAge: output.input.region.avgAge,
-        avgDailyIncomeInUSD: output.input.region.avgDailyIncomeInUSD,
-        avgDailyIncomePopulation: output.input.region.avgDailyIncomePopulation
+        'name': output.data.region.name,
+        'avgAge': output.data.region.avgAge,
+        'avgDailyIncomeInUSD': output.data.region.avgDailyIncomeInUSD,
+        'avgDailyIncomePopulation': output.data.region.avgDailyIncomePopulation
       },
-      periodType: output.input.periodType,
-      timeToElapse: output.input.timeToElapse,
-      reportedCases: output.input.reportedCases,
-      population: output.input.population,
-      totalHospitalBeds: output.input.totalHospitalBeds
+      'periodType': output.data.periodType,
+      'timeToElapse': output.data.timeToElapse,
+      'reportedCases': output.data.reportedCases,
+      'population': output.data.population,
+      'totalHospitalBeds': output.data.totalHospitalBeds
     },
-    impact: {
+    'impact': {
       '@': {
-        type: 'Impact'
+        'type': 'Impact'
       },
-      currentlyInfected: output.impact.currentlyInfected,
-      infectionsByRequestedTime: output.impact.infectionsByRequestedTime,
-      severeCasesByRequestedTime: output.impact.severeCasesByRequestedTime,
-      casesForICUByRequestedTime: output.impact.casesForICUByRequestedTime,
-      hospitalBedsByRequestedTime: output.impact.hospitalBedsByRequestedTime,
-      casesForVentilatorsByRequestedTime: output.impact.casesForVentilatorsByRequestedTime,
-      dollarsInFlight: output.impact.dollarsInFlight
+      'currentlyInfected': output.impact.currentlyInfected,
+      'infectionsByRequestedTime': output.impact.infectionsByRequestedTime,
+      'severeCasesByRequestedTime': output.impact.severeCasesByRequestedTime,
+      'casesForICUByRequestedTime': output.impact.casesForICUByRequestedTime,
+      'hospitalBedsByRequestedTime': output.impact.hospitalBedsByRequestedTime,
+      'casesForVentilatorsByRequestedTime': output.impact.casesForVentilatorsByRequestedTime,
+      'dollarsInFlight': output.impact.dollarsInFlight
     },
-    severeImpact: {
+    'severeImpact': {
       '@': {
-        type: 'Severe Impact'
+        'type': 'Severe Impact'
       },
-      currentlyInfected: output.severeImpact.currentlyInfected,
-      infectionsByRequestedTime: output.severeImpact.infectionsByRequestedTime,
-      severeCasesByRequestedTime: output.severeImpact.severeCasesByRequestedTime,
-      casesForICUByRequestedTime: output.severeImpact.casesForVentilatorsByRequestedTime,
-      hospitalBedsByRequestedTime: output.severeImpact.hospitalBedsByRequestedTime,
-      casesForVentilatorsByRequestedTime: output.severeImpact.casesForVentilatorsByRequestedTime,
-      dollarsInFlight: output.severeImpact.dollarsInFlight
+      'currentlyInfected': output.severeImpact.currentlyInfected,
+      'infectionsByRequestedTime': output.severeImpact.infectionsByRequestedTime,
+      'severeCasesByRequestedTime': output.severeImpact.severeCasesByRequestedTime,
+      'casesForICUByRequestedTime': output.severeImpact.casesForVentilatorsByRequestedTime,
+      'hospitalBedsByRequestedTime': output.severeImpact.hospitalBedsByRequestedTime,
+      'casesForVentilatorsByRequestedTime': output.severeImpact.casesForVentilatorsByRequestedTime,
+      'dollarsInFlight': output.severeImpact.dollarsInFlight
     },
-    hospitalBedsByRequestedTime: output.hospitalBedsByRequestedTime
+    'hospitalBedsByRequestedTime': output.hospitalBedsByRequestedTime
   };
   return obj;
 };
@@ -76,8 +76,8 @@ const calculateImpact = (req, res) => {
     const output = covid19ImpactEstimator(req.body);
     logs.push({ method: req.method, url: req.baseUrl, status: 200 });
     if (req.params.format === 'xml') {
-      const fromJsToXml = js2xmlparser.parse('response', convertToXml(output));
-      return res.set('Content-Type', 'text/xml').status(200)
+      const fromJsToXml = js2xmlparser.parse('output', convertToXml(output));
+      return res.set('Content-Type', 'application/xml').status(200)
         .send(fromJsToXml);
     }
     return res.status(200).send({ ...output });

@@ -1,0 +1,10 @@
+GET /api/v1/on-covid-19 200 
+GET /api/v1/on-covid-19 200 
+POST /api/v1/on-covid-19 200 
+POST /api/v1/on-covid-19 500 
+POST /api/v1/on-covid-19 200 
+POST /api/v1/on-covid-19 500 
+POST /api/v1/on-covid-19 200 
+POST /api/v1/on-covid-19 500 
+POST /api/v1/on-covid-19 200 
+POST /api/v1/on-covid-19 500 
